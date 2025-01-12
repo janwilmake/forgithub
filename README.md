@@ -2,6 +2,7 @@ List of websites that use the same URL structure as github and provide a tool fo
 
 - https://uithub.com - get prompt-friendly codebase + API
 - https://gitingest.com - get prompt-friendly codebase
+- https://gitdiagram.com - repo to diagram
 - https://gitpodcast.com - make a podcast about your github repo
 - https://githus.com - better dashboard
 - https://cache.forgithub.com - cache of github data
