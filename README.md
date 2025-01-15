@@ -1,4 +1,4 @@
-# Tools For Github
+# Highly Accessible Tools For Github
 
 Here's a list of APIs that use the same URL structure as github and provide a tool for GitHub.
 
