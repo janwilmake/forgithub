@@ -1,0 +1,9 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "forgithub"
+main = "main.ts"
+compatibility_date = "2025-01-13"
+
+routes = [
+  { pattern = "forgithub.com", custom_domain = true },
+  { pattern = "www.forgithub.com", custom_domain = true }
+]
