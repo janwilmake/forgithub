@@ -1,10 +1,15 @@
+# Tools For Github
+
 List of APIs that use the same URL structure as github and provide a tool for GitHub:
 
-- https://uithub.com - get prompt-friendly codebase
-- https://githus.com - static dashboard
-- https://diff.forgithub.com - API to see diff (using compare URL structure)
-- https://join.forgithub.com - cached data like issues, wiki, and actions
+- gitingest.com - [get prompt-friendly codebase](https://gitingest.com)
+- gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
+- uithub.com - [get prompt-friendly codebase (and API)](https://uithub.com)
 
-TODO:
+# Contributing
 
-Make this `index.html` be shown on any path (like ide) and add all links there that link through, so you can always discover more for github.
+Please make a PR for any additional tools with the following requirements:
+
+- follow the same structure in the README
+- the tool must at least support the `/[owner]/[repo]/[page]/[brancg]/[...path]` url structure or a subset thereof
+- bonus points if the tool exposes an `openapi.json` at its root

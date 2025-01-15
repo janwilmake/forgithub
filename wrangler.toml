@@ -7,3 +7,7 @@ routes = [
   { pattern = "forgithub.com", custom_domain = true },
   { pattern = "www.forgithub.com", custom_domain = true }
 ]
+
+rules = [
+  { type = "Text", globs = ["**/*.md"], fallthrough = true }
+]
