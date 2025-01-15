@@ -1,6 +1,6 @@
 # Tools For Github
 
-List of APIs that use the same URL structure as github and provide a tool for GitHub:
+Here's a list of APIs that use the same URL structure as github and provide a tool for GitHub. To easily navigate from any page on github to any of these tools, you can just prepend "for" to your URL and you'll get an overview with contextual redirects!
 
 - gitingest.com - [get prompt-friendly codebase](https://gitingest.com)
 - gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
