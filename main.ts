@@ -41,7 +41,7 @@ export default {
 
     // Parse URLs from README
     const apiEndpoints = await parseUrlsFromReadme(readme);
-
+    console.log(apiEndpoints);
     // Generate HTML with links and descriptions
     const html = `
   <!DOCTYPE html>
@@ -125,7 +125,7 @@ export default {
             apiEndpoints.length > 0
               ? apiEndpoints
                   .map((endpoint) => {
-                    const fullUrl = `${endpoint.url}${pathname}`;
+                    const fullUrl = `${endpoint.url}${pathname.slice(1)}`;
                     const hostname = new URL(endpoint.url).hostname;
                     return `
                 <a href="${fullUrl}" class="link-url" target="_blank">
