@@ -4,6 +4,7 @@ Here's a list of APIs that use the same URL structure as github and provide a to
 
 - gitingest.com - [get prompt-friendly codebase](https://gitingest.com)
 - gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
+- github.dev - [VSCode in the browser](https://github.dev)
 - uithub.com - [get prompt-friendly codebase (and API)](https://uithub.com)
 - wiki.forgithub.com - [download a wiki as a zip](https://wiki.forgithub.com)
 - log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)

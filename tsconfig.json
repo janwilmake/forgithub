@@ -1,7 +1,6 @@
 {
   "include": ["**/*.ts"],
   "compilerOptions": {
-    "types": ["globals.d.ts"],
     "resolveJsonModule": true,
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
