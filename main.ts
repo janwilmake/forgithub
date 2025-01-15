@@ -152,6 +152,14 @@ export default {
             border-radius: 4px;
             font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
         }
+        .info {
+            color: #586069;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            background: #efefef;
+            border-radius: 4px;
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
         .no-links {
             text-align: center;
             padding: 2rem;
@@ -171,9 +179,13 @@ export default {
     <div class="search-container">
         <input type="text" class="search-input" placeholder="Search endpoints..." id="searchInput">
     </div>
+    <div class="info">Replace 'github.com' with 'forgithub.com' to find highly accessible github tools</div>
+
     <div class="current-path">
         Current path: ${pathname}
     </div>
+    
+
     <div class="links" id="linkContainer">
         ${
           apiEndpoints.length > 0
