@@ -14,5 +14,5 @@ Please make a PR for any additional tools with the following requirements:
 
 - follow the same structure in the README
 - the tool must at least support the `/[owner]/[repo]/[page]/[brancg]/[...path]` url structure or a subset thereof
-- bonus points if the tool exposes an `openapi.json` at its root
 - the tool should have a freemium business model and not require sign-in at first
+- bonus points if the tool exposes an `openapi.json` at its root
