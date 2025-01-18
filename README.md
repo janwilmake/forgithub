@@ -1,15 +1,23 @@
 # GitHub Tools Powered By URL UX
 
-Here's a list of APIs that use the same URL structure as github and provide a tool for GitHub.
+Here's a list of tools that use the same URL structure as github enabling you to use it by just changing your url.
 
-- gitingest.com - [get prompt-friendly codebase](https://gitingest.com)
-- gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
+To navigate to your desired page more easily, go from any 'github.com/_' url to 'forgithub.com/_' and you'll get **quick links**! You can star your favorites, or after you remember them you can visit them directly.
+
+## Editors
+
 - bolt.new - [open in bolt․new](https://bolt.new/github.com)
 - github.dev - [VSCode in the browser](https://github.dev)
-- uithub.com - [get prompt-friendly codebase (and API)](https://uithub.com)
-- log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
 
-To navigate to your desired page more easily, go from any 'github.com/_' url to 'forgithub.com/_' and you'll get **quick links**!
+## LLM Context
+
+- gitingest.com - [get prompt-friendly codebase](https://gitingest.com)
+- uithub.com - [get prompt-friendly codebase (and API)](https://uithub.com)
+
+## Various
+
+- log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
+- gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
 
 # Contributing
 
