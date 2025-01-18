@@ -1,4 +1,4 @@
-# Highly Accessible Tools For Github
+# GitHub Tools Powered By URL UX
 
 Here's a list of APIs that use the same URL structure as github and provide a tool for GitHub.
 
@@ -22,10 +22,8 @@ Please make a PR for any additional tools with the following requirements:
 
 # Why?
 
-Easy. That's why
-
 [![](thumb.png)](https://github.com/janwilmake/forgithub/raw/refs/heads/main/demo.mov)
 
-Because URL UX is fantastic. 'Repo to Anything' is the dream!
+URL UX makes tools highly accessible. Since a lot of what devs do evolves around repos, I figured that's a good one to focus on. 'Repo to Anything' is the dream!
 
 ![](urlux.png)
