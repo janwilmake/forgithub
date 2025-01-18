@@ -22,6 +22,10 @@ Please make a PR for any additional tools with the following requirements:
 
 # Why?
 
+Easy. That's why
+
+<video src="demo.mov" muted autoplay></video>
+
 Because URL UX is fantastic. 'Repo to Anything' is the dream!
 
 ![](urlux.png)
