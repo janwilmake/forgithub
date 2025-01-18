@@ -19,3 +19,9 @@ Please make a PR for any additional tools with the following requirements:
 - the tool must at least support the `/[owner]/[repo]/[page]/[brancg]/[...path]` url structure or a subset thereof
 - the tool should have a freemium business model and not require sign-in at first
 - bonus points if the tool exposes an `openapi.json` at its root
+
+# Why?
+
+Because URL UX is fantastic. 'Repo to Anything' is the dream!
+
+![](urlux.png)
