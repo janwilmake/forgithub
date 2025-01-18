@@ -24,7 +24,7 @@ Please make a PR for any additional tools with the following requirements:
 
 Easy. That's why
 
-[![](placeholder.png)](https://github.com/janwilmake/forgithub/raw/refs/heads/main/demo.mov)
+[![](thumb.png)](https://github.com/janwilmake/forgithub/raw/refs/heads/main/demo.mov)
 
 Because URL UX is fantastic. 'Repo to Anything' is the dream!
 
