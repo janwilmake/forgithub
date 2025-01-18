@@ -16,7 +16,9 @@ async function parseUrlsFromReadme(content: string): Promise<ApiEndpoint[]> {
       const parsedUrl = new URL(url);
       if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
         endpoints.push({
-          url: parsedUrl.toString(),
+          url: parsedUrl.toString().endsWith("/")
+            ? parsedUrl.toString()
+            : parsedUrl.toString() + "/",
           description: text.trim(),
         });
       }
