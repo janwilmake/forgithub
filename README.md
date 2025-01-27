@@ -44,4 +44,4 @@ URL UX makes tools highly accessible. Since a lot of what devs do evolves around
 
 - 2025-01-12 - created the initial version of forgithub.com
 - 2025-01-18 - improved layout
-- 2025-01-27 - added columns and favicons to website
+- 2025-01-27 - added ogimage and added columns and favicons to website
