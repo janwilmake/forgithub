@@ -134,6 +134,7 @@ export default {
     const [owner, repo] = pathname.slice(1).split("/");
     const name = owner && repo ? `${owner}/${repo}` : "GitHub";
     const title = `Tools For ${name}`;
+    const ogImageUrl = `https://quickog.com/screenshot/forgithub.com${pathname}`;
 
     const sections = mdToJson(readme);
     const firstH1 = Object.keys(sections)[1];
@@ -153,6 +154,39 @@ export default {
             content="width=device-width, initial-scale=1.0"
           />
           <title>${title}</title>
+          <meta
+            name="description"
+            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+          />
+          <meta name="robots" content="index, follow" />
+
+          <!-- Facebook Meta Tags -->
+          <meta property="og:url" content="https://forgithub.com" />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content="${title}" />
+          <meta
+            property="og:description"
+            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+          />
+          <meta property="og:image" content="${ogImageUrl}" />
+          <meta
+            property="og:image:alt"
+            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+          />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+
+          <!-- Twitter Meta Tags -->
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta property="twitter:domain" content="forgithub.com" />
+          <meta property="twitter:url" content="https://forgithub.com" />
+          <meta name="twitter:title" content="${title}" />
+          <meta
+            name="twitter:description"
+            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+          />
+          <meta name="twitter:image" content="${ogImageUrl}" />
+
           <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
@@ -325,7 +359,7 @@ export default {
                 Current path: <b>${pathname}</b>
                 ${owner && repo
                   ? `
-                  <a href="https://github.com/${pathname}" 
+                  <a target="_blank" href="https://github.com${pathname}" 
                      class="text-gray-600 hover:text-gray-900">
                     (View on GitHub)
                   </a>
