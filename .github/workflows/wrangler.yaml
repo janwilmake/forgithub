@@ -1,0 +1,72 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - "*"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Check wrangler.toml for environments
+        id: check-env
+        run: |
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          if [ ! -f "wrangler.toml" ]; then
+            echo "env_flag=" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+          if grep -q "\\[env\\.${BRANCH_NAME}\\]" wrangler.toml; then
+            echo "env_flag=--env ${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          else
+            echo "env_flag=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install wrangler
+        run: npm install -g wrangler
+
+      - name: Sync All Secrets to Cloudflare
+        env:
+          SECRETS_CONTEXT: ${{ toJSON(secrets) }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          # Create a temporary file with secret names and values
+          echo "$SECRETS_CONTEXT" | jq -r 'to_entries | .[] | select(.key | startswith("github_") | not) | select(.key != "CLOUDFLARE_API_TOKEN") | [.key, .value] | @tsv' > secrets.txt
+
+          # Function to set a secret
+          set_secret() {
+            secret_name="$1"
+            secret_value="$2"
+            if [ -n "${{ steps.check-env.outputs.env_flag }}" ]; then
+              echo "Setting $secret_name for environment ${{ steps.check-env.outputs.env_flag }}"
+              echo "$secret_value" | wrangler secret put "$secret_name" ${{ steps.check-env.outputs.env_flag }}
+            else
+              echo "Setting $secret_name for default environment"
+              echo "$secret_value" | wrangler secret put "$secret_name"
+            fi
+          }
+          export -f set_secret
+
+          # Use parallel to set secrets (2 arguments per job)
+          parallel --colsep '\t' set_secret {1} {2} :::: secrets.txt
+
+          # Clean up
+          rm secrets.txt
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy ${{ steps.check-env.outputs.env_flag }}
