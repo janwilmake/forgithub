@@ -39,3 +39,9 @@ Please make a PR for any additional tools with the following requirements:
 URL UX makes tools highly accessible. Since a lot of what devs do evolves around repos, I figured that's a good one to focus on. 'Repo to Anything' is the dream!
 
 ![](urlux.png)
+
+# CHANGELOG
+
+- 2025-01-12 - created the initial version of forgithub.com
+- 2025-01-18 - improved layout
+- 2025-01-27 - added columns and favicons to website
