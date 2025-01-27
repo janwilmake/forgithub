@@ -13,8 +13,8 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 
 ## LLM Context
 
-- gitingest.com - [get prompt-friendly codebase](https://gitingest.com)
-- uithub.com - [get prompt-friendly codebase (and API)](https://uithub.com)
+- gitingest.com - [prompt-friendly codebase](https://gitingest.com)
+- uithub.com - [prompt-friendly codebase](https://uithub.com)
 
 ## Various
 
