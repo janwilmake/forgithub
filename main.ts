@@ -281,19 +281,6 @@ export default {
                 card.classList.remove("bg-yellow-50");
                 starIcon.classList.remove("text-yellow-500");
                 starIcon.classList.add("text-gray-400");
-
-                // Move card to bottom of starred items section
-                const category = card.closest(".category");
-                const cardsContainer = card.parentElement;
-                const starredCards = Array.from(
-                  cardsContainer.querySelectorAll(".tool-card.bg-yellow-50"),
-                );
-                if (starredCards.length > 0) {
-                  cardsContainer.insertBefore(
-                    card,
-                    starredCards[starredCards.length - 1].nextSibling,
-                  );
-                }
               }
             }
 
