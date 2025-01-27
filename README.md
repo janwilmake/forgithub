@@ -7,6 +7,8 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 ## Editors
 
 - bolt.new - [open in bolt․new](https://bolt.new/github.com)
+- stackblitz.com - [open in stackblitz](https://stackblitz.com/github.com)
+- pr.new - [open with codeflow](https://pr.new/github.com)
 - github.dev - [VSCode in the browser](https://github.dev)
 
 ## LLM Context
