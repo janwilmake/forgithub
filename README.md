@@ -22,7 +22,7 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 - log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
 - gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
 - gitdiagram.com - [codebase to diagram](https://gitdiagram.com)
-- githubtracker.com [tracks commits, issues, pull requests and contributors](https://githubtracker.com)
+- githubtracker.com [track commits, issues, prs and more](https://githubtracker.com)
 
 # Contributing
 
