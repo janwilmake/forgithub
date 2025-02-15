@@ -1,6 +1,8 @@
+// Import README content as a markdown string and mdToJson function to parse it.
 import readme from "./README.md";
 import { mdToJson } from "./mdToJson";
 
+// Define an interface representing an API endpoint with URL, description, category, and starred state.
 interface ApiEndpoint {
   url: string;
   description: string;
@@ -8,7 +10,10 @@ interface ApiEndpoint {
   isStarred?: boolean;
 }
 
-// Function to get starred items from localStorage
+/**
+ * Retrieves the user's starred items from localStorage.
+ * Returns an object where keys are URL-encoded tool URLs and values are booleans.
+ */
 function getStarredItems(): Record<string, boolean> {
   try {
     const starred = localStorage.getItem("starredTools");
@@ -19,7 +24,10 @@ function getStarredItems(): Record<string, boolean> {
   }
 }
 
-// Function to save starred items to localStorage
+/**
+ * Saves the updated starred items object to localStorage.
+ * @param items - Record mapping URL-encoded tool URLs to their starred state.
+ */
 function saveStarredItems(items: Record<string, boolean>) {
   try {
     localStorage.setItem("starredTools", JSON.stringify(items));
@@ -28,6 +36,14 @@ function saveStarredItems(items: Record<string, boolean>) {
   }
 }
 
+/**
+ * Renders an HTML tool card for a given URL, description, and starred state.
+ * @param url - The base URL of the tool.
+ * @param description - A text description of the tool.
+ * @param pathname - The current path name used for linking purposes.
+ * @param isStarred - Boolean flag indicating if the tool is starred.
+ * @returns A HTML string representing the tool card.
+ */
 function renderToolCard(
   url: string,
   description: string,
@@ -60,7 +76,14 @@ function renderToolCard(
   `;
 }
 
+/**
+ * Parses markdown content looking for Markdown links.
+ * Each link is converted into an ApiEndpoint object with URL and description.
+ * @param content - The markdown content to parse.
+ * @returns An array of ApiEndpoint objects.
+ */
 function parseUrlsFromReadme(content: string): ApiEndpoint[] {
+  // Regex to match markdown links: [description](url)
   const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
   const endpoints: ApiEndpoint[] = [];
   let match;
@@ -71,6 +94,7 @@ function parseUrlsFromReadme(content: string): ApiEndpoint[] {
       const parsedUrl = new URL(url);
       if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
         endpoints.push({
+          // Ensure URL ends with a "/"
           url: parsedUrl.toString().endsWith("/")
             ? parsedUrl.toString()
             : parsedUrl.toString() + "/",
@@ -85,6 +109,13 @@ function parseUrlsFromReadme(content: string): ApiEndpoint[] {
   return endpoints;
 }
 
+/**
+ * Renders an HTML category section provided a title and markdown content.
+ * @param title - The category title.
+ * @param content - The markdown content for that category.
+ * @param pathname - The current path name to be used by tool card links.
+ * @returns A HTML string representing the complete category block.
+ */
 function renderCategory(title: string, content: any, pathname: string): string {
   if (!content) {
     return "";
@@ -93,18 +124,19 @@ function renderCategory(title: string, content: any, pathname: string): string {
   const urls = parseUrlsFromReadme(content);
   const starredItems = getStarredItems();
 
-  // Add isStarred property to each endpoint
+  // Map endpoints to include the isStarred property from localStorage.
   const urlsWithStarred = urls.map((endpoint) => ({
     ...endpoint,
     isStarred: starredItems[encodeURIComponent(endpoint.url)] || false,
   }));
 
-  // Sort items - starred items first
+  // Sort items so that starred items are rendered first.
   const sortedUrls = urlsWithStarred.sort((a, b) => {
     if (a.isStarred === b.isStarred) return 0;
     return a.isStarred ? -1 : 1;
   });
 
+  // Generate HTML for each tool card.
   const items = sortedUrls
     .map((item) =>
       renderToolCard(item.url, item.description, pathname, item.isStarred),
@@ -121,23 +153,38 @@ function renderCategory(title: string, content: any, pathname: string): string {
   `;
 }
 
+/**
+ * A simple tagged template literal function to compose HTML strings.
+ * @param strings - Template literal string segments.
+ * @param values - Values to be interpolated.
+ * @returns Combined HTML string.
+ */
 export const html = (strings: TemplateStringsArray, ...values: any[]) => {
   return strings.reduce(
     (result, str, i) => result + str + (values[i] || ""),
     "",
   );
 };
+
+/**
+ * Main export with fetch handler serving an HTML page.
+ */
 export default {
   async fetch(request: Request): Promise<Response> {
+    // Parse the request URL and extract pathname and possible owner/repo segments.
     const url = new URL(request.url);
     const pathname = url.pathname;
     const [owner, repo] = pathname.slice(1).split("/");
     const name = owner && repo ? `${owner}/${repo}` : "GitHub";
     const title = `Tools For ${name}`;
+    // Generate an Open Graph image URL based on the current pathname.
     const ogImageUrl = `https://quickog.com/screenshot/forgithub.com${pathname}`;
 
+    // Parse the README markdown into sections.
     const sections = mdToJson(readme);
+    // Assumes the first header in the README holds the tool categories.
     const firstH1 = Object.keys(sections)[1];
+    // Render each category section into HTML.
     const categoriesHtml = Object.entries(sections[firstH1])
       .filter(([key]) => key !== "_content")
       .map(([category, content]) =>
@@ -145,6 +192,7 @@ export default {
       )
       .join("\n");
 
+    // Compose the complete HTML page.
     const htmlString = html`<!DOCTYPE html>
       <html lang="en">
         <head>
@@ -187,11 +235,13 @@ export default {
           />
           <meta name="twitter:image" content="${ogImageUrl}" />
 
+          <!-- Include Tailwind CSS from CDN for styling -->
           <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
           />
           <style>
+            /* Basic page styling */
             body {
               font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
                 Helvetica, Arial, sans-serif;
@@ -200,6 +250,7 @@ export default {
               line-height: 1.5;
               color: #24292e;
             }
+            /* Tool card styling */
             .tool-card {
               display: flex;
               align-items: center;
@@ -221,6 +272,7 @@ export default {
               height: 16px;
               margin-right: 0.5rem;
             }
+            /* Grid for categories */
             .category-grid {
               display: grid;
               grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -245,12 +297,17 @@ export default {
             }
           </style>
           <script>
+            /**
+             * Toggles the starred state of a tool card both in the UI and localStorage.
+             * @param {string} urlKey - The URL-encoded key representing the tool.
+             * @param {HTMLElement} button - The button element which was clicked.
+             */
             function toggleStar(urlKey, button) {
-              // Prevent the click from triggering the link
+              // Prevent the default click behavior from triggering the link.
               event.preventDefault();
               event.stopPropagation();
 
-              // Get current starred items
+              // Retrieve current starred items from localStorage.
               let starred = {};
               try {
                 const stored = localStorage.getItem("starredTools");
@@ -259,17 +316,17 @@ export default {
                 console.warn("Error reading starred items:", e);
               }
 
-              // Toggle starred state
+              // Toggle the starred state for the provided key.
               starred[urlKey] = !starred[urlKey];
 
-              // Update localStorage
+              // Save the updated starred items back to localStorage.
               try {
                 localStorage.setItem("starredTools", JSON.stringify(starred));
               } catch (e) {
                 console.warn("Error saving starred items:", e);
               }
 
-              // Update UI
+              // Update the UI based on the new state.
               const card = button.closest(".tool-card");
               const starIcon = button.querySelector("svg");
 
@@ -284,7 +341,7 @@ export default {
               }
             }
 
-            // Initialize starred items on page load
+            // On page load, initialize the starred items UI by reading localStorage.
             document.addEventListener("DOMContentLoaded", () => {
               try {
                 const starred = localStorage.getItem("starredTools");
@@ -318,6 +375,7 @@ export default {
             <header class="flex justify-between items-center mb-8">
               <h1 class="text-2xl font-bold">${title}</h1>
               <div class="flex items-center gap-4">
+                <!-- Link to the source repository -->
                 <a
                   href="https://github.com/janwilmake/forgithub"
                   class="flex items-center text-gray-600 hover:text-gray-900"
@@ -355,11 +413,13 @@ export default {
               </p>
             </div>
 
+            <!-- Render all the tool categories as a grid -->
             <div class="category-grid">${categoriesHtml}</div>
           </div>
         </body>
       </html>`;
 
+    // Return the generated HTML page as a Response.
     return new Response(htmlString, {
       headers: {
         "content-type": "text/html;charset=UTF-8",
