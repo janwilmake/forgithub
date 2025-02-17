@@ -16,7 +16,7 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 - gitingest.com - [prompt-friendly codebase](https://gitingest.com)
 - uithub.com - [prompt-friendly codebase](https://uithub.com)
 - github.gg - [chat with codebase](https://github.gg)
-- chat.forgithub.com - [chat with codebase](https://chat.forgithub.com)
+- githuq.com - [chat with code](https://githuq.com)
 
 ## Various
 
