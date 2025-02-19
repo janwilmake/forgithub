@@ -1,49 +1,49 @@
-# GitHub Tools Powered By URL UX
+# Ferramentas GitHub Alimentadas por URL UX
 
-Here's a list of tools that use the same URL structure as github enabling you to use it by just changing your url.
+Aqui está uma lista de ferramentas que usam a mesma estrutura de URL do GitHub, permitindo que você as use apenas mudando sua URL.
 
-To navigate to your desired page more easily, go from any 'github.com/_' url to 'forgithub.com/_' and you'll get **quick links**! You can star your favorites, or after you remember them you can visit them directly.
+Para navegar até sua página desejada mais facilmente, vá de qualquer URL 'github.com/_' para 'forgithub.com/_' e você receberá **links rápidos**! Você pode favoritar seus preferidos, ou depois que se lembrar deles, pode visitá-los diretamente.
 
-## Editors
+## Editores
 
-- bolt.new - [open in bolt․new](https://bolt.new/github.com)
-- stackblitz.com - [open in stackblitz](https://stackblitz.com/github.com)
-- pr.new - [open with codeflow](https://pr.new/github.com)
-- github.dev - [VSCode in the browser](https://github.dev)
+- bolt.new - [abrir no bolt․new](https://bolt.new/github.com)
+- stackblitz.com - [abrir no stackblitz](https://stackblitz.com/github.com)
+- pr.new - [abrir com codeflow](https://pr.new/github.com)
+- github.dev - [VSCode no navegador](https://github.dev)
 
-## LLM Context
+## Contexto LLM
 
-- gitingest.com - [prompt-friendly codebase](https://gitingest.com)
-- uithub.com - [prompt-friendly codebase](https://uithub.com)
-- github.gg - [chat with codebase](https://github.gg)
-- githuq.com - [chat with code](https://githuq.com)
+- gitingest.com - [base de código amigável para prompts](https://gitingest.com)
+- uithub.com - [base de código amigável para prompts](https://uithub.com)
+- github.gg - [chat com base de código](https://github.gg)
+- githuq.com - [chat com código](https://githuq.com)
 
-## Various
+## Diversos
 
-- log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
-- gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
-- gitdiagram.com - [codebase to diagram](https://gitdiagram.com)
-- githubtracker.com [track commits, issues, prs and more](https://githubtracker.com)
+- log.forgithub.com - [obter últimos commits e informações de contribuidores](https://log.forgithub.com)
+- gitpodcast.com - [base de código para podcast](https://gitpodcast.com)
+- gitdiagram.com - [base de código para diagrama](https://gitdiagram.com)
+- githubtracker.com [rastrear commits, issues, prs e mais](https://githubtracker.com)
 
-# Contributing
+# Contribuindo
 
-Please make a PR for any additional tools with the following requirements:
+Por favor, faça um PR para quaisquer ferramentas adicionais com os seguintes requisitos:
 
-- follow the same structure in the README
-- the tool must at least support the `/[owner]/[repo]/[page]/[brancg]/[...path]` url structure or a subset thereof
-- the tool should have a freemium business model and not require sign-in at first
-- bonus points if the tool exposes an `openapi.json` at its root
+- siga a mesma estrutura no README
+- a ferramenta deve suportar pelo menos a estrutura de URL `/[owner]/[repo]/[page]/[branch]/[...path]` ou um subconjunto dela
+- a ferramenta deve ter um modelo de negócios freemium e não exigir login inicialmente
+- pontos extras se a ferramenta expuser um `openapi.json` em sua raiz
 
-# Why?
+# Por quê?
 
 [![](thumb.png)](https://github.com/janwilmake/forgithub/raw/refs/heads/main/demo.mov)
 
-URL UX makes tools highly accessible. Since a lot of what devs do evolves around repos, I figured that's a good one to focus on. 'Repo to Anything' is the dream!
+URL UX torna as ferramentas altamente acessíveis. Como muito do que os desenvolvedores fazem gira em torno de repositórios, achei que esse seria um bom foco. 'Repo para Qualquer Coisa' é o sonho!
 
 ![](urlux.png)
 
-# CHANGELOG
+# HISTÓRICO DE MUDANÇAS
 
-- 2025-01-12 - created the initial version of forgithub.com
-- 2025-01-18 - improved layout
-- 2025-01-27 - added ogimage and added columns and favicons to website. fixed ci/cd
+- 2025-01-12 - criada a versão inicial do forgithub.com
+- 2025-01-18 - layout melhorado
+- 2025-01-27 - adicionada ogimage e adicionadas colunas e favicons ao website. corrigido ci/cd
