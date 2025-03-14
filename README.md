@@ -43,7 +43,7 @@ Please make a PR for any additional tools with the following requirements:
 - the tool must at least support the `/[owner]/[repo]/[page]/[branch]/[...path]` url structure or a subset thereof
 - bonus points if the tool exposes an [`openapi.json`](https://www.openapis.org/what-is-openapi) at its root
 
-The philosophy of tools for GitHub is to create an open ecosystem of code analysis and transformation for the intelligent internet. We believe that tools should be accessible, data should be open, and together we can drive cost down to zero.
+The philosophy of tools for GitHub is to create an open ecosystem of code analysis and transformation for the intelligent internet. We believe that tools should be accessible, data should be open, and together we can drive cost down to zero. We believe in a future where everyone can be a 10x developer, except for the 10x devs of today, they will be 1000x.
 
 [![](thumb.png)](https://github.com/janwilmake/forgithub/raw/refs/heads/main/demo.mov)
 
