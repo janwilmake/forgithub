@@ -40,15 +40,14 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 Please make a PR for any additional tools with the following requirements:
 
 - follow the same structure in the README
-- the tool must at least support the `/[owner]/[repo]/[page]/[brancg]/[...path]` url structure or a subset thereof
-- the tool should have a freemium business model and not require sign-in at first
-- bonus points if the tool exposes an `openapi.json` at its root
+- the tool must at least support the `/[owner]/[repo]/[page]/[branch]/[...path]` url structure or a subset thereof
+- bonus points if the tool exposes an [`openapi.json`](https://www.openapis.org/what-is-openapi) at its root
 
-# Why?
+The philosophy of tools for GitHub is to create an open ecosystem of code analysis and transformation for the intelligent internet. We believe that tools should be accessible, data should be open, and together we can drive cost down to zero.
 
 [![](thumb.png)](https://github.com/janwilmake/forgithub/raw/refs/heads/main/demo.mov)
 
-URL UX makes tools highly accessible. Since a lot of what devs do evolves around repos, I figured that's a good one to focus on. 'Repo to Anything' is the dream!
+URL UX makes tools highly accessible for both humans and agents. code is the source of SaaS and agents, but we can do much more in a highly automated way than is currently done. Let's build an ecosystem for 'Repo to Anything'.
 
 ![](urlux.png)
 
