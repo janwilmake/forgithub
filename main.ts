@@ -286,8 +286,10 @@ export default {
     const url = new URL(request.url);
     const pathname = url.pathname;
     const [owner, repo] = pathname.slice(1).split("/");
-    const name = owner && repo ? `${owner}/${repo}` : "GitHub";
-    const title = `Tools For GitHub Repo: ${name}`;
+    const title =
+      owner && repo
+        ? `Tools For GitHub Repo: ${owner}/${repo}`
+        : "GitHub Tools using URL UX";
     // Generate an Open Graph image URL based on the current pathname.
     const ogImageUrl = `https://quickog.com/screenshot/forgithub.com${pathname}`;
 
@@ -573,7 +575,7 @@ export default {
             ${renderExplanationHeader(pathname)}
 
             <footer class="mt-12 text-center text-sm text-gray-500 p-4">
-              <p>forgithub.com - Find GitHub Tools that use URL UX</p>
+              <p>forgithub.com - Find GitHub Tools and APIs that use URL UX</p>
             </footer>
           </div>
         </body>
