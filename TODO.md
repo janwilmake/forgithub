@@ -6,5 +6,6 @@ SEO
 
 Misc
 
+- extrahere md parser as API and expose forgithub as API too.
 - every day generate a vectorization of the hostnames and link texts. use this locally with a local vector search
 - add a kv store that counts hostname clicks, cache that daily, and sort the items, in their category, based on this.

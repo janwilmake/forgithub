@@ -200,7 +200,7 @@ export const html = (strings: TemplateStringsArray, ...values: any[]) => {
  * @param pathname - The current path from URL
  * @returns HTML string for the explanatory header
  */
-function renderExplanationHeader(pathname: string): string {
+function renderExplanationFooter(pathname: string): string {
   const hasPath = pathname !== "/";
   const currentPath = hasPath ? pathname : "/user/repo";
 
@@ -567,12 +567,20 @@ export default {
                 </p>
               </div>
             `
-              : ""}
+              : `
+<div class="mb-4 mt-2 py-2 px-4 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+  <span class="font-medium mr-2">Examples:</span>
+  <a href="/OAI/OpenAPI-Specification" class="text-blue-600 hover:underline mr-3">OAI/OpenAPI-Specification</a>
+  <a href="/cloudflare/agents-starter" class="text-blue-600 hover:underline mr-3">cloudflare/agents-starter</a>
+  <a href="/LangbaseInc/langbase-sdk" class="text-blue-600 hover:underline mr-3">LangbaseInc/langbase-sdk</a>
+  <a href="/cloudflare/cloudflare-docs" class="text-blue-600 hover:underline">cloudflare/cloudflare-docs</a>
+</div>
+`}
 
             <!-- Render all the tool categories as a grid -->
             <div class="category-grid">${categoriesHtml}</div>
 
-            ${renderExplanationHeader(pathname)}
+            ${renderExplanationFooter(pathname)}
 
             <footer class="mt-12 text-center text-sm text-gray-500 p-4">
               <p>forgithub.com - Find GitHub Tools and APIs that use URL UX</p>
