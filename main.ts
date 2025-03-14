@@ -43,8 +43,8 @@ function renderToolCard(
   const urlKey = encodeURIComponent(url);
 
   // Create example URL display (original GitHub URL → tool URL)
-  const examplePath = "/owner/repo";
-  const urlPattern = `${domain}${examplePath}`;
+  const examplePath = "owner/repo";
+  const urlPattern = `${url}${examplePath}`;
 
   return `
     <div class="tool-card group ${
@@ -58,7 +58,7 @@ function renderToolCard(
                 alt="${domain} favicon">
             <div class="flex flex-col w-48">
               <span class="text-gray-800 font-medium group-hover:text-gray-900">${description}</span>
-              <span class="text-xs text-gray-500 mt-1 font-mono">https://${urlPattern}</span>
+              <span class="text-gray-500 mt-1 font-mono" style="font-size:10px">${urlPattern}</span>
             </div>
           </a>
           <button class="star-button ml-2 p-2 hover:text-yellow-500 transition-colors" 
