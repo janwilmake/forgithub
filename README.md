@@ -20,10 +20,17 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 
 ## Various
 
-- log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
 - gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
 - gitdiagram.com - [codebase to diagram](https://gitdiagram.com)
 - githubtracker.com [track commits, issues, prs and more](https://githubtracker.com)
+
+## APIs
+
+- cache.forgithub.com - [cache of repo metadata](https://cache.forgithub.com)
+- log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
+- zipobject - [Extract any zip over API](https://zipobject.com/github.com)
+- config.zipobject.com - [Extract config files](https://config.zipobject.com/github.com)
+- domain.zipobject.com - [Find domain for repo](https://domain.zipobject.com/github.com)
 
 # Contributing
 
