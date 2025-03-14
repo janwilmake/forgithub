@@ -289,7 +289,7 @@ export default {
     const title =
       owner && repo
         ? `Tools For GitHub Repo: ${owner}/${repo}`
-        : "GitHub Tools using URL UX";
+        : "Accessible GitHub Tools";
     // Generate an Open Graph image URL based on the current pathname.
     const ogImageUrl = `https://quickog.com/screenshot/forgithub.com${pathname}`;
 
