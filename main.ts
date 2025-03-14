@@ -25,18 +25,6 @@ function getStarredItems(): Record<string, boolean> {
 }
 
 /**
- * Saves the updated starred items object to localStorage.
- * @param items - Record mapping URL-encoded tool URLs to their starred state.
- */
-function saveStarredItems(items: Record<string, boolean>) {
-  try {
-    localStorage.setItem("starredTools", JSON.stringify(items));
-  } catch (e) {
-    console.warn("Error saving starred items:", e);
-  }
-}
-
-/**
  * Renders an HTML tool card for a given URL, description, and starred state.
  * @param url - The base URL of the tool.
  * @param description - A text description of the tool.
@@ -55,7 +43,7 @@ function renderToolCard(
   const urlKey = encodeURIComponent(url);
 
   // Create example URL display (original GitHub URL → tool URL)
-  const examplePath = "/user/repo";
+  const examplePath = "/owner/repo";
   const urlPattern = `${domain}${examplePath}`;
 
   return `
@@ -63,12 +51,12 @@ function renderToolCard(
       isStarred ? "bg-yellow-50" : ""
     }" data-url="${urlKey}">
       <div class="flex flex-col w-full">
-        <div class="flex items-center">
+        <div class="flex items-start">
           <a href="${fullUrl}" class="flex-grow flex items-center" target="_blank">
             <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=40" 
                 class="favicon mr-3" 
                 alt="${domain} favicon">
-            <div class="flex flex-col">
+            <div class="flex flex-col w-48">
               <span class="text-gray-800 font-medium group-hover:text-gray-900">${description}</span>
               <span class="text-xs text-gray-500 mt-1 font-mono">https://${urlPattern}</span>
             </div>
@@ -216,8 +204,8 @@ function renderExplanationHeader(pathname: string): string {
   const currentPath = hasPath ? pathname : "/user/repo";
 
   return `
-    <div class="mb-8 bg-white rounded-lg p-6 shadow-md border border-gray-200">
-      <h2 class="text-xl font-bold mb-4">GitHub URL Tools</h2>
+    <div class="my-8 bg-white rounded-lg p-6 shadow-md border border-gray-200">
+      <h2 class="text-xl font-bold mb-4">GitHub Tools with URL UX</h2>
       
       <div class="flex flex-col lg:flex-row gap-6">
         <!-- Left side: explanation -->
@@ -298,7 +286,7 @@ export default {
     const pathname = url.pathname;
     const [owner, repo] = pathname.slice(1).split("/");
     const name = owner && repo ? `${owner}/${repo}` : "GitHub";
-    const title = `Tools For ${name}`;
+    const title = `Tools For GitHub Repo: ${name}`;
     // Generate an Open Graph image URL based on the current pathname.
     const ogImageUrl = `https://quickog.com/screenshot/forgithub.com${pathname}`;
 
@@ -537,10 +525,11 @@ export default {
           <div class="max-w-6xl mx-auto">
             <header class="flex justify-between items-center mb-6">
               <h1 class="text-2xl font-bold">${title}</h1>
+
               <div class="flex items-center gap-4">
                 <!-- Link to the source repository -->
                 <a
-                  href="https://github.com/janwilmake/forgithub"
+                  href="https://github.com/janwilmake/forgithub/edit/main/README.md"
                   class="flex items-center text-gray-600 hover:text-gray-900"
                 >
                   <svg
@@ -552,16 +541,20 @@ export default {
                       d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
                     ></path>
                   </svg>
-                  Source
+                  Edit
                 </a>
               </div>
             </header>
 
+            <p>
+              Here's a list of tools and APIs that use the same URL structure as
+              github enabling you to use it by just changing your url.
+            </p>
+
             <!-- Explanation Header -->
-            ${renderExplanationHeader(pathname)}
             ${owner && repo
               ? `
-              <div class="mb-6 bg-gray-100 rounded-lg p-4 text-gray-600 border border-gray-200">
+              <div class="my-6 bg-gray-100 rounded-lg p-4 text-gray-600 border border-gray-200">
                 <p>
                   <strong>Current repository:</strong> ${owner}/${repo}
                   <a target="_blank" href="https://github.com${pathname}" 
@@ -573,20 +566,13 @@ export default {
             `
               : ""}
 
-            <!-- Tools Categories Header -->
-            <div class="mb-6">
-              <h2 class="text-xl font-bold mb-3">GitHub Tools by Category</h2>
-              <p class="text-gray-600">
-                Select a tool based on what you need to do with your GitHub
-                repository:
-              </p>
-            </div>
-
             <!-- Render all the tool categories as a grid -->
             <div class="category-grid">${categoriesHtml}</div>
 
+            ${renderExplanationHeader(pathname)}
+
             <footer class="mt-12 text-center text-sm text-gray-500 p-4">
-              <p>ForGitHub.com - Making GitHub tools more accessible.</p>
+              <p>forgithub.com - Find GitHub Tools that use URL UX</p>
             </footer>
           </div>
         </body>
