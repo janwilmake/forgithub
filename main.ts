@@ -54,24 +54,40 @@ function renderToolCard(
   const fullUrl = `${url}${pathname.slice(1)}`;
   const urlKey = encodeURIComponent(url);
 
+  // Create example URL display (original GitHub URL → tool URL)
+  const examplePath = "/user/repo";
+  const urlPattern = `${domain}${examplePath}`;
+
   return `
     <div class="tool-card group ${
       isStarred ? "bg-yellow-50" : ""
     }" data-url="${urlKey}">
-      <a href="${fullUrl}" class="flex-grow flex items-center" target="_blank">
-        <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=40" 
-             class="favicon" 
-             alt="${domain} favicon">
-        <span class="text-gray-700 group-hover:text-gray-900">${description}</span>
-      </a>
-      <button class="star-button ml-2 p-2 hover:text-yellow-500 transition-colors" 
-              onclick="toggleStar('${urlKey}', this)">
-        <svg class="w-5 h-5 ${isStarred ? "text-yellow-500" : "text-gray-400"}" 
-             fill="currentColor" 
-             viewBox="0 0 20 20">
-          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-        </svg>
-      </button>
+      <div class="flex flex-col w-full">
+        <div class="flex items-center">
+          <a href="${fullUrl}" class="flex-grow flex items-center" target="_blank">
+            <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=40" 
+                class="favicon mr-3" 
+                alt="${domain} favicon">
+            <div class="flex flex-col">
+              <span class="text-gray-800 font-medium group-hover:text-gray-900">${description}</span>
+              <span class="text-xs text-gray-500 mt-1 font-mono">https://${urlPattern}</span>
+            </div>
+          </a>
+          <button class="star-button ml-2 p-2 hover:text-yellow-500 transition-colors" 
+                onclick="toggleStar('${urlKey}', this)">
+            <svg class="w-5 h-5 ${
+              isStarred ? "text-yellow-500" : "text-gray-400"
+            }" 
+                fill="currentColor" 
+                viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+          </button>
+        </div>
+        <a href="${fullUrl}" class="mt-2 text-sm text-gray-600 hover:text-gray-900" target="_blank">
+          Try it with your current path →
+        </a>
+      </div>
     </div>
   `;
 }
@@ -110,6 +126,26 @@ function parseUrlsFromReadme(content: string): ApiEndpoint[] {
 }
 
 /**
+ * Gets a category description based on the category name
+ * @param categoryName - The name of the category
+ * @returns A description string for the category
+ */
+function getCategoryDescription(categoryName: string): string {
+  const descriptions: Record<string, string> = {
+    Editors:
+      "Edit and modify repository code directly in your browser without cloning or downloading.",
+    "LLM Context":
+      "Use AI to understand, analyze, and chat with your codebase for better insights.",
+    Various:
+      "Visualize, track, and analyze your repository with specialized tools.",
+  };
+
+  return (
+    descriptions[categoryName] || "Tools for working with GitHub repositories."
+  );
+}
+
+/**
  * Renders an HTML category section provided a title and markdown content.
  * @param title - The category title.
  * @param content - The markdown content for that category.
@@ -143,10 +179,14 @@ function renderCategory(title: string, content: any, pathname: string): string {
     )
     .join("\n");
 
+  // Get the description for the category
+  const categoryDescription = getCategoryDescription(title);
+
   return `
     <div class="category">
-      <h2 class="text-lg font-semibold mb-4">${title}</h2>
-      <div class="space-y-2">
+      <h2 class="text-lg font-semibold mb-2">${title}</h2>
+      <p class="text-sm text-gray-600 mb-4">${categoryDescription}</p>
+      <div class="space-y-3">
         ${items}
       </div>
     </div>
@@ -165,6 +205,88 @@ export const html = (strings: TemplateStringsArray, ...values: any[]) => {
     "",
   );
 };
+
+/**
+ * Renders the explanatory header for the site
+ * @param pathname - The current path from URL
+ * @returns HTML string for the explanatory header
+ */
+function renderExplanationHeader(pathname: string): string {
+  const hasPath = pathname !== "/";
+  const currentPath = hasPath ? pathname : "/user/repo";
+
+  return `
+    <div class="mb-8 bg-white rounded-lg p-6 shadow-md border border-gray-200">
+      <h2 class="text-xl font-bold mb-4">GitHub URL Tools</h2>
+      
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Left side: explanation -->
+        <div class="flex-1">
+          <p class="text-lg mb-4">
+            <span class="font-medium">Replace</span> <code class="bg-gray-100 px-2 py-1 rounded">github.com</code> 
+            <span class="font-medium">with any tool domain</span> to instantly use that tool with your repository.
+          </p>
+          
+          <div class="bg-gray-50 p-4 rounded-lg mb-4 border border-gray-200">
+            <div class="flex items-center mb-3">
+              <div class="w-4 h-4 rounded-full bg-gray-300 mr-2"></div>
+              <span class="font-medium">Original:</span>
+            </div>
+            <code class="block bg-gray-100 p-2 rounded mb-4 break-all">https://github.com${currentPath}</code>
+            
+            <div class="flex items-center mb-3">
+              <div class="w-4 h-4 rounded-full bg-green-500 mr-2"></div>
+              <span class="font-medium">Transformed:</span>
+            </div>
+            <code class="block bg-blue-50 p-2 rounded text-blue-800 break-all">https://github.dev${currentPath}</code>
+          </div>
+          
+          <p class="text-sm text-gray-600">Each tool below shows its URL pattern. Click any tool to try it with your current path.</p>
+        </div>
+        
+        <!-- Right side: URL converter -->
+        <div class="flex-1">
+          <div class="border rounded-lg p-4 bg-gray-50">
+            <h3 class="font-medium mb-3">Try it yourself:</h3>
+            
+            <div class="mb-3">
+              <label class="block text-sm mb-1">GitHub Repository URL:</label>
+              <input type="text" id="repo-url" 
+                    placeholder="https://github.com/user/repo" 
+                    class="w-full p-2 border rounded"
+                    value="${
+                      hasPath
+                        ? `https://github.com${pathname}`
+                        : "https://github.com/facebook/react"
+                    }">
+            </div>
+            
+            <div class="mb-3">
+              <label class="block text-sm mb-1">Choose a tool:</label>
+              <select id="tool-selector" class="w-full p-2 border rounded">
+                <option value="https://github.dev">GitHub.dev - Edit in VS Code</option>
+                <option value="https://stackblitz.com">StackBlitz - Online IDE</option>
+                <option value="https://github.gg">GitHub.gg - Chat with Codebase</option>
+                <option value="https://gitdiagram.com">GitDiagram - Codebase to Diagram</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label class="block text-sm mb-1">Result:</label>
+              <div id="result-url" class="bg-green-50 p-2 border border-green-200 rounded text-green-800 break-all">
+                <!-- Will be populated by JavaScript -->
+              </div>
+            </div>
+            
+            <button id="open-url" class="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+              Open Repository in Selected Tool →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 /**
  * Main export with fetch handler serving an HTML page.
@@ -204,7 +326,7 @@ export default {
           <title>${title}</title>
           <meta
             name="description"
-            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+            content="Access powerful GitHub tools by simply replacing 'github.com' with a tool's domain in any repository URL."
           />
           <meta name="robots" content="index, follow" />
 
@@ -214,7 +336,7 @@ export default {
           <meta property="og:title" content="${title}" />
           <meta
             property="og:description"
-            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+            content="Access powerful GitHub tools by simply replacing 'github.com' with a tool's domain in any repository URL."
           />
           <meta property="og:image" content="${ogImageUrl}" />
           <meta
@@ -231,7 +353,7 @@ export default {
           <meta name="twitter:title" content="${title}" />
           <meta
             name="twitter:description"
-            content="Replace 'github.com' with 'forgithub.com' to find highly accessible github tools"
+            content="Access powerful GitHub tools by simply replacing 'github.com' with a tool's domain in any repository URL."
           />
           <meta name="twitter:image" content="${ogImageUrl}" />
 
@@ -249,28 +371,30 @@ export default {
               padding: 1rem;
               line-height: 1.5;
               color: #24292e;
+              background-color: #f8f9fa;
             }
             /* Tool card styling */
             .tool-card {
               display: flex;
               align-items: center;
-              padding: 0.5rem;
+              padding: 0.75rem;
               border: 1px solid #e1e4e8;
               border-radius: 6px;
-              margin-bottom: 0.5rem;
+              background-color: white;
               transition: all 0.2s;
               text-decoration: none;
             }
             .tool-card:hover {
-              background-color: #f6f8fa;
+              border-color: #0366d6;
+              box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             }
             .tool-card.bg-yellow-50:hover {
               background-color: #fef9c3;
             }
             .favicon {
-              width: 16px;
-              height: 16px;
-              margin-right: 0.5rem;
+              width: 20px;
+              height: 20px;
+              flex-shrink: 0;
             }
             /* Grid for categories */
             .category-grid {
@@ -281,9 +405,10 @@ export default {
             }
             .category {
               background: #fff;
-              padding: 1rem;
+              padding: 1.25rem;
               border-radius: 8px;
               box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+              border: 1px solid #e5e7eb;
             }
             .star-button {
               border: none;
@@ -341,8 +466,9 @@ export default {
               }
             }
 
-            // On page load, initialize the starred items UI by reading localStorage.
+            // URL converter functionality
             document.addEventListener("DOMContentLoaded", () => {
+              // Initialize starred items
               try {
                 const starred = localStorage.getItem("starredTools");
                 if (starred) {
@@ -367,12 +493,49 @@ export default {
               } catch (e) {
                 console.warn("Error initializing starred items:", e);
               }
+
+              // Initialize URL converter
+              const repoInput = document.getElementById("repo-url");
+              const toolSelector = document.getElementById("tool-selector");
+              const resultDisplay = document.getElementById("result-url");
+              const openButton = document.getElementById("open-url");
+
+              function updateResult() {
+                const repoUrl = repoInput.value.trim();
+                let path = "";
+
+                try {
+                  // Extract the path from the GitHub URL
+                  const url = new URL(repoUrl);
+                  if (url.hostname === "github.com") {
+                    path = url.pathname;
+                  } else {
+                    path = "/facebook/react"; // Fallback
+                  }
+                } catch (e) {
+                  path = "/facebook/react"; // Fallback for invalid URLs
+                }
+
+                const selectedTool = toolSelector.value;
+                const newUrl = \`\${selectedTool}\${path}\`;
+
+                resultDisplay.textContent = newUrl;
+                openButton.onclick = () => window.open(newUrl, "_blank");
+              }
+
+              if (repoInput && toolSelector) {
+                repoInput.addEventListener("input", updateResult);
+                toolSelector.addEventListener("change", updateResult);
+
+                // Initialize on page load
+                updateResult();
+              }
             });
           </script>
         </head>
         <body>
-          <div class="max-w-7xl mx-auto">
-            <header class="flex justify-between items-center mb-8">
+          <div class="max-w-6xl mx-auto">
+            <header class="flex justify-between items-center mb-6">
               <h1 class="text-2xl font-bold">${title}</h1>
               <div class="flex items-center gap-4">
                 <!-- Link to the source repository -->
@@ -394,27 +557,37 @@ export default {
               </div>
             </header>
 
-            <div class="mb-6 bg-gray-100 rounded-lg p-4 text-gray-600">
-              <p>
-                Replace 'github.com' with 'forgithub.com' to find highly
-                accessible github tools
-              </p>
-
-              <p class="mt-4">
-                Current path: <b>${pathname}</b>
-                ${owner && repo
-                  ? `
+            <!-- Explanation Header -->
+            ${renderExplanationHeader(pathname)}
+            ${owner && repo
+              ? `
+              <div class="mb-6 bg-gray-100 rounded-lg p-4 text-gray-600 border border-gray-200">
+                <p>
+                  <strong>Current repository:</strong> ${owner}/${repo}
                   <a target="_blank" href="https://github.com${pathname}" 
-                     class="text-gray-600 hover:text-gray-900">
+                     class="text-blue-600 hover:text-blue-800 ml-2">
                     (View on GitHub)
                   </a>
-                `
-                  : ""}
+                </p>
+              </div>
+            `
+              : ""}
+
+            <!-- Tools Categories Header -->
+            <div class="mb-6">
+              <h2 class="text-xl font-bold mb-3">GitHub Tools by Category</h2>
+              <p class="text-gray-600">
+                Select a tool based on what you need to do with your GitHub
+                repository:
               </p>
             </div>
 
             <!-- Render all the tool categories as a grid -->
             <div class="category-grid">${categoriesHtml}</div>
+
+            <footer class="mt-12 text-center text-sm text-gray-500 p-4">
+              <p>ForGitHub.com - Making GitHub tools more accessible.</p>
+            </footer>
           </div>
         </body>
       </html>`;

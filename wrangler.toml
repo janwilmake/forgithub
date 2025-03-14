@@ -1,6 +1,7 @@
 #:schema node_modules/wrangler/config-schema.json
 name = "forgithub"
 main = "main.ts"
+dev.port = 3000
 compatibility_date = "2025-01-13"
 
 routes = [
