@@ -18,11 +18,10 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 - github.gg - [chat with codebase](https://github.gg)
 - githuq.com - [chat with codebase](https://githuq.com)
 
-## Various
+## LLM Conversions
 
 - gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
 - gitdiagram.com - [codebase to diagram](https://gitdiagram.com)
-- githubtracker.com [track commits, issues, prs and more](https://githubtracker.com)
 
 ## APIs
 
@@ -31,6 +30,10 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 - zipobject - [Extract any zip over API](https://zipobject.com/github.com)
 - config.zipobject.com - [Extract config files](https://config.zipobject.com/github.com)
 - domain.zipobject.com - [Find domain for repo](https://domain.zipobject.com/github.com)
+
+## Various
+
+- githubtracker.com [track commits, issues, prs and more](https://githubtracker.com)
 
 # Contributing
 

@@ -124,8 +124,9 @@ function getCategoryDescription(categoryName: string): string {
       "Edit and modify repository code directly in your browser without cloning or downloading.",
     "LLM Context":
       "Use AI to understand, analyze, and chat with your codebase for better insights.",
-    Various:
-      "Visualize, track, and analyze your repository with specialized tools.",
+    "LLM Conversions": "Convert and analyse the codebase using LLMs",
+    Various: "Other useful tools.",
+    APIs: "Analyse GitHub Repos at scale with these APIs",
   };
 
   return (
