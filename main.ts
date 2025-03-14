@@ -551,7 +551,7 @@ export default {
 
             <p>
               Here's a list of tools and APIs that use the same URL structure as
-              github enabling you to use it by just changing your url.
+              GitHub enabling you to use it by just changing your url.
             </p>
 
             <!-- Explanation Header -->
