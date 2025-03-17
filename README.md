@@ -30,6 +30,7 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 - zipobject - [Extract any zip over API](https://zipobject.com/github.com)
 - config.zipobject.com - [Extract config files](https://config.zipobject.com/github.com)
 - domain.zipobject.com - [Find domain for repo](https://domain.zipobject.com/github.com)
+- threads.forgithub.com - [find X posts about repos](https://threads.forgithub.com)
 
 ## Various
 
