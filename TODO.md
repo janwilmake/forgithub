@@ -1,3 +1,8 @@
+Badges
+
+- Have an api for forgithub
+- Use it to render a form where you can select the ones you like and get a markdown snippet for it with a link to edit the markdown (and easily make PR)
+
 SEO
 
 - analyse stars to get top repos
