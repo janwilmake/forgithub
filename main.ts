@@ -1,5 +1,6 @@
 // Import README content as a markdown string and mdToJson function to parse it.
 import readme from "./README.md";
+import select from "./select.html";
 import { getFormat } from "./getFormat";
 import { stringify } from "yaml";
 import { mdToJson } from "./mdToJson";
@@ -7,6 +8,7 @@ import { mdToJson } from "./mdToJson";
 // Define an interface representing an API endpoint with URL, description, category, and starred state.
 interface ApiEndpoint {
   url: string;
+  iconUrl: string;
   description: string;
   category?: string;
   isStarred?: boolean;
@@ -36,6 +38,7 @@ function getStarredItems(): Record<string, boolean> {
  */
 function renderToolCard(
   url: string,
+  iconUrl: string,
   description: string,
   pathname: string,
   isStarred: boolean,
@@ -55,7 +58,7 @@ function renderToolCard(
       <div class="flex flex-col w-full">
         <div class="flex items-start">
           <a href="${fullUrl}" class="flex-grow flex items-center" target="_blank">
-            <img src="https://www.google.com/s2/favicons?domain=${domain}&sz=40" 
+            <img src="${iconUrl}" 
                 class="favicon mr-3" 
                 alt="${domain} favicon">
             <div class="flex flex-col w-48">
@@ -99,12 +102,14 @@ function parseUrlsFromReadme(content: string): ApiEndpoint[] {
     try {
       const parsedUrl = new URL(url);
       if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
+        const url = parsedUrl.toString().endsWith("/")
+          ? parsedUrl.toString()
+          : parsedUrl.toString() + "/";
         endpoints.push({
           // Ensure URL ends with a "/"
-          url: parsedUrl.toString().endsWith("/")
-            ? parsedUrl.toString()
-            : parsedUrl.toString() + "/",
+          url,
           description: text.trim(),
+          iconUrl: `https://www.google.com/s2/favicons?domain=${url}&sz=40`,
         });
       }
     } catch (e) {
@@ -165,7 +170,13 @@ function renderCategory(
   // Generate HTML for each tool card.
   const items = sortedUrls
     .map((item) =>
-      renderToolCard(item.url, item.description, pathname, item.isStarred),
+      renderToolCard(
+        item.url,
+        item.iconUrl,
+        item.description,
+        pathname,
+        item.isStarred,
+      ),
     )
     .join("\n");
 
@@ -298,10 +309,24 @@ const getSections = () => {
  */
 export default {
   async fetch(request: Request): Promise<Response> {
+    // Set CORS headers for all responses
+    const corsHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    };
+
+    // Handle OPTIONS requests for CORS
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        headers: corsHeaders,
+      });
+    }
+
     // Parse the request URL and extract pathname and possible owner/repo segments.
     const url = new URL(request.url);
     const pathname = url.pathname;
-    const [owner, repo] = pathname.slice(1).split("/");
+    const [owner, repo, page] = pathname.slice(1).split("/");
     const title =
       owner && repo
         ? `Tools For GitHub Repo: ${owner}/${repo}`
@@ -320,7 +345,7 @@ export default {
       (pathname === "/" || pathname === "/index.md")
     ) {
       return new Response(readme, {
-        headers: { "content-type": "text/markdown" },
+        headers: { "content-type": "text/markdown", ...corsHeaders },
       });
     }
 
@@ -336,13 +361,23 @@ export default {
 
     if (format === "application/json") {
       return new Response(JSON.stringify(list, undefined, 2), {
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", ...corsHeaders },
       });
     }
 
     if (format === "text/yaml") {
       return new Response(stringify(list), {
-        headers: { "content-type": "text/yaml" },
+        headers: { "content-type": "text/yaml", ...corsHeaders },
+      });
+    }
+
+    if (page === "select") {
+      const htmlString = select.replace("", "");
+      // Return the generated HTML page as a Response.
+      return new Response(htmlString, {
+        headers: {
+          "content-type": "text/html;charset=UTF-8",
+        },
       });
     }
 

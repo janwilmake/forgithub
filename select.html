@@ -1,0 +1,257 @@
+<!-- I designed this but although it seems nice, i think it doesn't deliver enough value. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For GitHub Tools Selector</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="font-sans text-gray-800 leading-relaxed">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 min-h-screen">
+        <!-- Left column (2/3) for tool selection -->
+        <div class="md:col-span-2 p-8">
+            <!-- Sticky header -->
+            <div class="sticky top-0 bg-white pt-4 pb-6 z-10 border-b border-gray-200 mb-6">
+                <h1 class="text-2xl font-bold text-blue-600 mb-4">For GitHub Tools Selector</h1>
+                <p class="mb-4">Select the tools you'd like to include in your README.md.</p>
+
+                <div class="flex gap-2">
+                    <button id="selectAllBtn"
+                        class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition flex-1">
+                        Select All
+                    </button>
+                    <button id="deselectAllBtn"
+                        class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded transition flex-1">
+                        Deselect All
+                    </button>
+                </div>
+            </div>
+
+            <div id="categoriesContainer" class="space-y-6"></div>
+        </div>
+
+        <!-- Right column (1/3) for markdown output -->
+        <div class="bg-gray-50 p-0">
+            <div class="sticky top-0 p-6 h-screen overflow-y-auto">
+                <div id="outputArea" class="bg-gray-100 p-4 rounded h-full flex flex-col">
+                    <h2 class="text-xl font-semibold mb-3">Generated Markdown</h2>
+                    <div id="markdownOutput"
+                        class="bg-white border border-gray-200 rounded p-4 font-mono whitespace-pre-wrap mb-4 flex-grow overflow-y-auto">
+                        Select tools to see the generated markdown.
+                    </div>
+                    <button id="editMarkdownBtn"
+                        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded text-center text-lg font-medium flex items-center justify-center gap-2 transition mt-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path
+                                d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                            <path
+                                d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                        </svg>
+                        Edit this markdown on GitHub
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // The repository path - extracted from URL
+        const pathname = window.location.pathname;
+        const [owner, repo] = pathname.split('/').slice(1)
+
+        // Function to fetch the data
+        async function fetchData() {
+            try {
+                // For demo purposes, using the provided JSON directly
+                // In production, would use: 
+                const data = await fetch(`https://forgithub.com/${owner}/${repo}.json`).then(res => res.json())
+
+                return data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return [];
+            }
+        }
+
+        // Function to group tools by category
+        function groupByCategory(data) {
+            return data.reduce((acc, item) => {
+                if (!acc[item.category]) {
+                    acc[item.category] = [];
+                }
+                acc[item.category].push(item);
+                return acc;
+            }, {});
+        }
+
+        // Function to render the categorized tools
+        function renderCategories(groupedData) {
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+
+            Object.entries(groupedData).forEach(([category, tools]) => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'bg-gray-100 p-4 rounded';
+
+                const categoryHeader = document.createElement('h2');
+                categoryHeader.className = 'text-lg font-semibold mb-3';
+                categoryHeader.textContent = category;
+                categoryDiv.appendChild(categoryHeader);
+
+                const toolsDiv = document.createElement('div');
+                toolsDiv.className = 'grid grid-cols-1 sm:grid-cols-2 gap-4';
+
+                tools.forEach(tool => {
+                    const toolCard = document.createElement('div');
+                    toolCard.className = 'bg-white border border-gray-200 rounded p-3 hover:shadow-md transition';
+
+                    const toolHeader = document.createElement('div');
+                    toolHeader.className = 'flex items-center mb-2';
+
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.className = 'mr-2 tool-checkbox';
+                    checkbox.dataset.url = tool.url;
+                    checkbox.dataset.description = tool.description;
+                    checkbox.dataset.iconUrl = tool.iconUrl;
+                    checkbox.id = `tool-${tool.url.replace(/[^\w]/g, '-')}`;
+
+                    // Add event listener to each checkbox for auto-generation
+                    checkbox.addEventListener('change', generateMarkdown);
+
+                    const icon = document.createElement('img');
+                    icon.className = 'w-5 h-5 mr-2';
+                    icon.src = tool.iconUrl;
+                    icon.alt = new URL(tool.url).hostname;
+
+                    toolHeader.appendChild(checkbox);
+                    toolHeader.appendChild(icon);
+
+                    const toolName = document.createElement('div');
+                    toolName.className = 'font-medium break-all';
+                    toolName.textContent = new URL(tool.url).hostname;
+
+                    const toolDescription = document.createElement('div');
+                    toolDescription.className = 'text-gray-600 text-sm';
+                    toolDescription.textContent = tool.description;
+
+                    toolCard.appendChild(toolHeader);
+                    toolCard.appendChild(toolName);
+                    toolCard.appendChild(toolDescription);
+                    toolsDiv.appendChild(toolCard);
+                });
+
+                categoryDiv.appendChild(toolsDiv);
+                container.appendChild(categoryDiv);
+            });
+        }
+
+        // Function to generate markdown
+        function generateMarkdown() {
+            const selectedTools = Array.from(document.querySelectorAll('.tool-checkbox:checked'))
+                .map(checkbox => ({
+                    url: checkbox.dataset.url,
+                    description: checkbox.dataset.description,
+                    hostname: new URL(checkbox.dataset.url).hostname
+                }));
+
+            if (selectedTools.length === 0) {
+                document.getElementById('markdownOutput').textContent = 'No tools selected.';
+                document.getElementById('editMarkdownBtn').disabled = true;
+                document.getElementById('editMarkdownBtn').classList.add('opacity-50');
+                return;
+            }
+
+            let markdown = '## Tools\n\n';
+
+            selectedTools.forEach(tool => {
+                markdown += `- [![${tool.hostname}](https://www.google.com/s2/favicons?domain=${tool.hostname}&sz=16) ${tool.hostname}](${tool.url}) - ${tool.description}\n`;
+            });
+
+            document.getElementById('markdownOutput').textContent = markdown;
+            document.getElementById('editMarkdownBtn').disabled = false;
+            document.getElementById('editMarkdownBtn').classList.remove('opacity-50');
+
+            // Create edit link
+            const encodedMarkdown = encodeURIComponent(markdown);
+            const currentPath = pathname.split('/').slice(1, 3).join('/');
+            const editUrl = `https://github.com/${currentPath}/edit/main/README.md?message=Update%20tools%20section&description=Updated%20via%20forgithub%20selector&value=${encodedMarkdown}`;
+            document.getElementById('editMarkdownBtn').setAttribute('data-url', editUrl);
+            document.getElementById('editMarkdownBtn').setAttribute('data-markdown', markdown);
+        }
+
+        // Function to copy text to clipboard
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch (err) {
+                console.error('Failed to copy: ', err);
+                return false;
+            }
+        }
+
+        // Event listeners for buttons
+        document.getElementById('selectAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.tool-checkbox').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            generateMarkdown(); // Auto-generate after selecting all
+        });
+
+        document.getElementById('deselectAllBtn').addEventListener('click', () => {
+            document.querySelectorAll('.tool-checkbox').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            generateMarkdown(); // Auto-generate after deselecting all
+        });
+
+        document.getElementById('editMarkdownBtn').addEventListener('click', async function (e) {
+            if (this.disabled) return;
+
+            const markdown = this.getAttribute('data-markdown');
+            const url = this.getAttribute('data-url');
+
+            if (markdown) {
+                const copied = await copyToClipboard(markdown);
+                if (copied) {
+                    // Temporary visual feedback
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" /></svg> Copied! Opening GitHub...';
+
+                    // Navigate after a short delay
+                    setTimeout(() => {
+                        window.open(url, '_blank');
+                        // Reset button text
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                        }, 1000);
+                    }, 500);
+                } else {
+                    window.open(url, '_blank');
+                }
+            } else {
+                window.open(url, '_blank');
+            }
+        });
+
+        // Initialize the page
+        async function initialize() {
+            const data = await fetchData();
+            const groupedData = groupByCategory(data);
+            renderCategories(groupedData);
+            // Initial disabled state for edit button
+            document.getElementById('editMarkdownBtn').disabled = true;
+            document.getElementById('editMarkdownBtn').classList.add('opacity-50');
+        }
+
+        // Start the app
+        initialize();
+    </script>
+</body>
+
+</html>
