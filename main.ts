@@ -1,5 +1,7 @@
 // Import README content as a markdown string and mdToJson function to parse it.
 import readme from "./README.md";
+import { getFormat } from "./getFormat";
+import { stringify } from "yaml";
 import { mdToJson } from "./mdToJson";
 
 // Define an interface representing an API endpoint with URL, description, category, and starred state.
@@ -141,12 +143,11 @@ function getCategoryDescription(categoryName: string): string {
  * @param pathname - The current path name to be used by tool card links.
  * @returns A HTML string representing the complete category block.
  */
-function renderCategory(title: string, content: any, pathname: string): string {
-  if (!content) {
-    return "";
-  }
-
-  const urls = parseUrlsFromReadme(content);
+function renderCategory(
+  title: string,
+  urls: ApiEndpoint[],
+  pathname: string,
+): string {
   const starredItems = getStarredItems();
 
   // Map endpoints to include the isStarred property from localStorage.
@@ -277,6 +278,21 @@ function renderExplanationFooter(pathname: string): string {
   `;
 }
 
+const getSections = () => {
+  const rootSections = mdToJson(readme);
+
+  // Assumes the first header in the README holds the tool categories.
+  const firstH1 = Object.keys(rootSections)[1];
+  const sections = Object.entries(rootSections[firstH1])
+    .filter(([key]) => key !== "_content")
+    .map(([category, content]) => ({
+      category,
+      content: (content as any)._content,
+      urls: parseUrlsFromReadme((content as any)._content),
+    }));
+  return sections;
+};
+
 /**
  * Main export with fetch handler serving an HTML page.
  */
@@ -292,17 +308,47 @@ export default {
         : "Accessible GitHub Tools For Any Repo";
     // Generate an Open Graph image URL based on the current pathname.
     const ogImageUrl = `https://quickog.com/screenshot/forgithub.com${pathname}`;
+    const format = getFormat(request);
+    const segmentChunks = pathname.split("/").pop()!.split(".");
+    const ext = segmentChunks.length > 1 ? segmentChunks.pop() : undefined;
 
     // Parse the README markdown into sections.
-    const sections = mdToJson(readme);
-    // Assumes the first header in the README holds the tool categories.
-    const firstH1 = Object.keys(sections)[1];
+    const sections = getSections();
+
+    if (
+      format === "text/markdown" &&
+      (pathname === "/" || pathname === "/index.md")
+    ) {
+      return new Response(readme, {
+        headers: { "content-type": "text/markdown" },
+      });
+    }
+
+    const list = sections
+      .map((item) => item.urls.map((x) => ({ ...x, category: item.category })))
+      .flat()
+      .map((x) => ({
+        ...x,
+        url:
+          x.url +
+          pathname.slice(1).slice(0, ext ? -1 * (ext.length + 1) : undefined),
+      }));
+
+    if (format === "application/json") {
+      return new Response(JSON.stringify(list, undefined, 2), {
+        headers: { "content-type": "application/json" },
+      });
+    }
+
+    if (format === "text/yaml") {
+      return new Response(stringify(list), {
+        headers: { "content-type": "text/yaml" },
+      });
+    }
+
     // Render each category section into HTML.
-    const categoriesHtml = Object.entries(sections[firstH1])
-      .filter(([key]) => key !== "_content")
-      .map(([category, content]) =>
-        renderCategory(category, (content as any)._content, pathname),
-      )
+    const categoriesHtml = sections
+      .map((item) => renderCategory(item.category, item.urls, pathname))
       .join("\n");
 
     // Compose the complete HTML page.

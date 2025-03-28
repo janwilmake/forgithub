@@ -1,7 +1,8 @@
-Badges
+forgithub Badges
 
-- Have an api for forgithub
+- Have an API for forgithub
 - Use it to render a form where you can select the ones you like and get a markdown snippet for it with a link to edit the markdown (and easily make PR)
+- Have this as API and apply this on some top repos daily, manually, seeing the response.
 
 SEO
 

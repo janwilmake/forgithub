@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "marked": "^15.0.6"
+    "marked": "^15.0.6",
+    "yaml": "^2.7.0"
   }
 }
