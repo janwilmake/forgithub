@@ -611,6 +611,18 @@ export default {
               <h1 class="text-2xl font-bold">${title}</h1>
 
               <div class="flex items-center gap-4">
+                <!-- Add the Select Tools button here -->
+                ${owner && repo
+                  ? `
+      <a href="/${owner}/${repo}/select" 
+         class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+        </svg>
+        Select Tools For README
+      </a>
+    `
+                  : ""}
                 <iframe
                   src="https://ghbtns.com/github-btn.html?user=janwilmake&repo=forgithub&type=star&count=true&size=large"
                   frameborder="0"

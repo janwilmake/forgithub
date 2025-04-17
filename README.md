@@ -13,10 +13,10 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 
 ## LLM Context
 
-- gitingest.com - [prompt-friendly codebase](https://gitingest.com)
+- gitmcp.io - [mcp for any repo](https://gitmcp.io)
 - uithub.com - [prompt-friendly codebase](https://uithub.com)
+- gitingest.com - [prompt-friendly codebase](https://gitingest.com)
 - github.gg - [chat with codebase](https://github.gg)
-- githuq.com - [chat with codebase](https://githuq.com)
 
 ## LLM Conversions
 
@@ -26,10 +26,6 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 ## APIs
 
 - cache.forgithub.com - [cache of repo metadata](https://cache.forgithub.com)
-- log.forgithub.com - [get last commits and contributor info](https://log.forgithub.com)
-- zipobject - [Extract any zip over API](https://zipobject.com/github.com)
-- config.zipobject.com - [Extract config files](https://config.zipobject.com/github.com)
-- domain.zipobject.com - [Find domain for repo](https://domain.zipobject.com/github.com)
 - threads.forgithub.com - [find X posts about repos](https://threads.forgithub.com)
 
 ## Various
