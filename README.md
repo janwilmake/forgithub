@@ -6,31 +6,32 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 
 ## Editors
 
-- bolt.new - [build apps with AI](https://bolt.new/github.com)
-- stackblitz.com - [online IDE](https://stackblitz.com/github.com)
-- pr.new - [run with codeflow](https://pr.new/github.com)
-- github.dev - [VSCode in the browser](https://github.dev)
+- bolt.new - [build apps with AI](https://bolt.new/github.com/)
+- stackblitz.com - [online IDE](https://stackblitz.com/github.com/)
+- pr.new - [run with codeflow](https://pr.new/github.com/)
+- github.dev - [VSCode in the browser](https://github.dev/)
 
 ## LLM Context
 
-- gitmcp.io - [mcp for any repo](https://gitmcp.io)
-- uithub.com - [prompt-friendly codebase](https://uithub.com)
-- gitingest.com - [prompt-friendly codebase](https://gitingest.com)
-- github.gg - [chat with codebase](https://github.gg)
+- gitmcp.io - [mcp for any repo](https://gitmcp.io/)
+- uithub.com - [prompt-friendly codebase](https://uithub.com/)
+- gitingest.com - [prompt-friendly codebase](https://gitingest.com/)
+- github.gg - [chat with codebase](https://github.gg/)
 
 ## LLM Conversions
 
-- gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
-- gitdiagram.com - [codebase to diagram](https://gitdiagram.com)
+- gitpodcast.com - [codebase to podcast](https://gitpodcast.com/)
+- gitdiagram.com - [codebase to diagram](https://gitdiagram.com/)
 
 ## APIs
 
-- cache.forgithub.com - [cache of repo metadata](https://cache.forgithub.com)
-- threads.forgithub.com - [find X posts about repos](https://threads.forgithub.com)
+- cache.forgithub.com - [cache of repo metadata](https://cache.forgithub.com/)
+- threads.forgithub.com - [find X posts about repos](https://threads.forgithub.com/)
 
 ## Various
 
-- githubtracker.com [track commits, issues, prs and more](https://githubtracker.com)
+- star-history.com [track stars](https://www.star-history.com/#)
+- githubtracker.com [track commits, issues, prs and more](https://githubtracker.com/)
 
 # Contributing
 
