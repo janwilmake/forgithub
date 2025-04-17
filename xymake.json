@@ -1,10 +1,5 @@
 {
-  "posts": [
-    {
-      "url": "https://github.com/janwilmake/forgithub/tree/main",
-      "branch": "main",
-      "tweetId": "1905600828003545565",
-      "createdAt": "2025-03-28T12:40:16.548Z"
-    }
-  ]
+  "posts": {
+    "select": { "url": "https://x.com/janwilmake/status/1912777871006777366" }
+  }
 }
