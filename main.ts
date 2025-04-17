@@ -102,12 +102,16 @@ function parseUrlsFromReadme(content: string): ApiEndpoint[] {
     try {
       const parsedUrl = new URL(url);
       if (parsedUrl.protocol === "http:" || parsedUrl.protocol === "https:") {
-        const url = parsedUrl.toString().endsWith("/")
-          ? parsedUrl.toString()
-          : parsedUrl.toString() + "/";
+        const stringUrl = parsedUrl.toString();
+
+        // Ensure URL ends with a "/"
+        const finalUrl =
+          stringUrl.endsWith("/") || stringUrl.endsWith("#")
+            ? parsedUrl.toString()
+            : parsedUrl.toString() + "/";
+
         endpoints.push({
-          // Ensure URL ends with a "/"
-          url,
+          url: finalUrl,
           description: text.trim(),
           iconUrl: `https://www.google.com/s2/favicons?domain=${url}&sz=40`,
         });
