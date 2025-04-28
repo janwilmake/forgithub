@@ -22,6 +22,7 @@ To navigate to your desired page more easily, go from any 'github.com/_' url to 
 
 - gitpodcast.com - [codebase to podcast](https://gitpodcast.com)
 - gitdiagram.com - [codebase to diagram](https://gitdiagram.com)
+- openrepowiki.xyz - [codebase to wikipedia](https://openrepowiki.xyz)
 
 ## APIs
 
